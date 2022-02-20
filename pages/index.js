@@ -1,7 +1,7 @@
 import * as React from "react"
 import Head from "next/head"
 
-import { styled, useTheme, ThemeProvider } from "@mui/material/styles"
+import { styled, useTheme } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -85,13 +85,12 @@ const Drawer = styled(MuiDrawer, {
 );
 
 /* sx={{ bgcolor: "#222" }} */
+/* <Head>
+        <title>RBXExchange</title>
+      </Head> */
 
 export default function Home() {
-  const theme = useTheme({
-    palette: {
-      mode: "dark"
-    }
-  });
+  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -103,49 +102,44 @@ export default function Home() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Head>
-        <title>RBXExchange</title>
-      </Head>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{
-                marginRight: "36px",
-                ...(open && { display: "none" })
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: "36px",
+              ...(open && { display: "none" })
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        <Typography variant="h6" noWrap component="div">
+          Home
+        </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent" open={open} sx={{ bgcolor: "#444" }}>
+        <DrawerHeader>
           <Typography variant="h6" noWrap component="div">
-            Home
-          </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open} sx={{ bgcolor: "#444" }}>
-          <DrawerHeader>
-            <Typography variant="h6" noWrap component="div">
-              
-            </Typography>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-        </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <DrawerHeader />
-          <Typography className="homeTitle">
             
           </Typography>
-        </Box>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        <Typography className="homeTitle">
+          
+        </Typography>
       </Box>
-    </ThemeProvider>
+    </Box>
   );
 }
