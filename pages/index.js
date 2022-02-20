@@ -1,7 +1,7 @@
 import * as React from "react"
 import Head from "next/head"
 
-import { styled, useTheme } from "@mui/material/styles"
+import { styled, useTheme, ThemeProvider } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -84,8 +84,14 @@ const Drawer = styled(MuiDrawer, {
   })
 );
 
+/* sx={{ bgcolor: "#222" }} */
+
 export default function Home() {
-  const theme = useTheme();
+  const theme = useTheme({
+    palette: {
+      mode: "dark"
+    }
+  });
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -97,13 +103,13 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Head>
         <title>RBXExchange</title>
       </Head>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open} sx={{ bgcolor: "#222" }}>
+        <AppBar position="fixed" open={open}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -125,7 +131,7 @@ export default function Home() {
         <Drawer variant="permanent" open={open} sx={{ bgcolor: "#444" }}>
           <DrawerHeader>
             <Typography variant="h6" noWrap component="div">
-              RBXExchange
+              
             </Typography>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -133,7 +139,13 @@ export default function Home() {
           </DrawerHeader>
           <Divider />
         </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+          <Typography className="homeTitle">
+            
+          </Typography>
+        </Box>
       </Box>
-    </div>
+    </ThemeProvider>
   );
 }
