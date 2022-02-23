@@ -1,6 +1,5 @@
 {
   "projects": {
-    "staging": "rbxexchange-21cf1"
-  },
-  "targets": {}
+    "default": "rbxexchange-21cf1"
+  }
 }
