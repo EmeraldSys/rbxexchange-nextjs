@@ -1,5 +1,7 @@
 import * as React from "react"
 import Head from "next/head"
+import { useRouter } from "next/router"
+import { useAuth } from "../contexts/AuthContext"
 
 import { styled, useTheme } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
@@ -14,6 +16,10 @@ import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+
+import AccountCircle from "@mui/icons-material/AccountCircle"
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
 
 const drawerWidth = 240;
 
@@ -90,6 +96,14 @@ const Drawer = styled(MuiDrawer, {
       </Head> */
 
 export default function Home() {
+  const { currentUser, loading, logout } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!loading && !currentUser)
+      router.push("/login");
+  }, [currentUser, loading]);
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -99,6 +113,21 @@ export default function Home() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleMenu = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const menuLogout = () => {
+    setAnchorEl(null);
+    logout();
   };
 
   return (
@@ -118,9 +147,36 @@ export default function Home() {
           >
             <MenuIcon />
           </IconButton>
-        <Typography variant="h6" noWrap component="div">
-          Home
-        </Typography>
+          <Typography variant="h6" noWrap component="div">
+            Home
+          </Typography>
+          <div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="account-menu"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit">
+                <AccountCircle />
+            </IconButton>
+            <Menu
+              id="account-menu"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}>
+                <MenuItem onClick={menuLogout}>Logout</MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} sx={{ bgcolor: "#444" }}>

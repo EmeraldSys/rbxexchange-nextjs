@@ -1,5 +1,13 @@
 import * as React from "react"
-import { auth } from "../FirebaseApp"
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    sendPasswordResetEmail,
+    onAuthStateChanged
+} from "firebase/auth"
+import app from "../FirebaseAuth"
 
 const AuthContext = React.createContext();
 
@@ -8,35 +16,29 @@ export function useAuth() {
 };
 
 export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = React.useState();
+    const auth = getAuth(app);
+
+    const [currentUser, setCurrentUser] = React.useState(null);
     const [loading, setLoading] = React.useState(true);
 
     function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password);
+        return createUserWithEmailAndPassword(auth, email, password);
     }
 
     function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password);
+        return signInWithEmailAndPassword(auth, email, password);
     }
 
     function logout() {
-        return auth.signOut();
+        return signOut(auth);
     }
 
     function resetPassword(email) {
-        return auth.sendPasswordResetEmail(email);
-    }
-
-    function updateEmail(email) {
-        return currentUser.updateEmail(email);
-    }
-
-    function updatePassword(password) {
-        return currentUser.updatePassword(password);
+        return sendPasswordResetEmail(auth, email);
     }
 
     React.useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
             setLoading(false);
         });
@@ -46,17 +48,16 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        loading,
         login,
         signup,
         logout,
-        resetPassword,
-        updateEmail,
-        updatePassword
+        resetPassword
     };
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     );
 };

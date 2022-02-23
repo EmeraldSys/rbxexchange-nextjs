@@ -10,8 +10,6 @@ const firebaseCreds = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 }
 
-// if (firebase.getApps().length < 1) {}
 const app = firebase.initializeApp(firebaseCreds)
 
-export const auth = app.auth()
 export default app

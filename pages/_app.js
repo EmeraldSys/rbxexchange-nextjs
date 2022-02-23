@@ -3,6 +3,8 @@ import { red } from "@mui/material/colors"
 import CssBaseline from "@mui/material/CssBaseline"
 import '../styles/globals.css'
 
+import { AuthProvider } from "../contexts/AuthContext"
+
 function MyApp({ Component, pageProps }) {
   const theme = createTheme({
     palette: {
@@ -28,10 +30,12 @@ function MyApp({ Component, pageProps }) {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
