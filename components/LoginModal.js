@@ -78,8 +78,8 @@ export default function LoginModal() {
             setLoading(true);
             await login(email, password);
             router.push("/app");
-        } catch {
-            setError("Failed");
+        } catch(e) {
+            setError("Login failed. " + e.message);
         }
 
         setLoading(false);
