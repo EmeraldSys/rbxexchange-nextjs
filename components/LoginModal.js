@@ -2,6 +2,11 @@ import * as React from "react"
 import { useRouter } from "next/router"
 import { useAuth } from "../contexts/AuthContext"
 
+import Collapse from "@mui/material/Collapse"
+import Alert from "@mui/material/Alert"
+import IconButton from "@mui/material/IconButton"
+import CloseIcon from "@mui/icons-material/Close"
+
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Avatar from "@mui/material/Avatar"
@@ -101,6 +106,28 @@ export default function LoginModal() {
                         </Grid>
                     </Grid>
                     <Grid container direction="column" rowSpacing={1.5}>
+                        <Grid item xs>
+                            <Collapse in={error != ""}>
+                                <Alert
+                                  severity="error"
+                                  action={
+                                    <IconButton
+                                        aria-label="close"
+                                        color="inherit"
+                                        size="small"
+                                        onClick={() => {
+                                            setError("");
+                                        }}
+                                    >
+                                        <CloseIcon fontSize="inherit" />
+                                    </IconButton>
+                                  }
+                                  sx={{ mb: 2 }}
+                                  >
+                                    {error}
+                                  </Alert>
+                            </Collapse>
+                        </Grid>
                         <Grid item xs>
                             <TextField label="Email" variant="outlined" placeholder="me@example.com" fullWidth onChange={(e) => handleEmailChange(e)} required />
                         </Grid>
