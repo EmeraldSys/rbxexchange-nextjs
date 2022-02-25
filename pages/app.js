@@ -21,6 +21,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 
+import List from "@mui/material/List"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import HomeIcon from "@mui/icons-material/Home"
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import ListItemText from "@mui/material/ListItemText"
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -150,33 +157,35 @@ export default function Home() {
           <Typography variant="h6" noWrap component="div">
             Home
           </Typography>
-          <div>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="account-menu"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit">
-                <AccountCircle />
-            </IconButton>
-            <Menu
-              id="account-menu"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}>
-                <MenuItem onClick={menuLogout}>Logout</MenuItem>
-            </Menu>
-          </div>
+          {currentUser &&
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="account-menu"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit">
+                  <AccountCircle />
+              </IconButton>
+              <Menu
+                id="account-menu"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}>
+                  <MenuItem onClick={menuLogout}>Logout</MenuItem>
+              </Menu>
+            </div>
+          }
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open} sx={{ bgcolor: "#444" }}>
@@ -189,12 +198,31 @@ export default function Home() {
           </IconButton>
         </DrawerHeader>
         <Divider />
+        <List>
+          <ListItemButton key="Home">
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </List>
+        <Divider />
+        <List>
+          <ListItemButton key="Upgrade">
+            <ListItemIcon>
+              <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Upgrade" />
+          </ListItemButton>
+        </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography className="homeTitle">
-          
-        </Typography>
+        {currentUser &&
+          <Typography variant="h4" className="homeTitle">
+            Hello, {currentUser.email}!
+          </Typography>
+        }
       </Box>
     </Box>
   );

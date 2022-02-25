@@ -13,6 +13,7 @@ import Avatar from "@mui/material/Avatar"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
 
 /* <form onSubmit={handleSubmit}>
                 <Grid sx={{
@@ -141,6 +142,11 @@ export default function LoginModal() {
                         </Grid>
                         <Grid item xs>
                             <Button color="primary">Forgot password?</Button>
+                        </Grid>
+                        <Grid item xs sx={{ textAlign: "center" }}>
+                            <Typography variant="subtitle2" sx={{ color: "#bbb" }}>
+                                &copy; {process.env.NEXT_PUBLIC_APP_COPYRIGHT_YEAR} EmeraldSys Media Ltd
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
