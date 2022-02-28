@@ -126,10 +126,6 @@ export default function AppContainer(props) {
         logout();
     };
 
-    React.useEffect(() => {
-        console.log(props.title);
-    });
-
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
@@ -192,7 +188,7 @@ export default function AppContainer(props) {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                <ListItemButton key="Home">
+                <ListItemButton key="Home" onClick={() => router.push("/app/home")}>
                     <ListItemIcon>
                     <HomeIcon />
                     </ListItemIcon>
@@ -201,7 +197,7 @@ export default function AppContainer(props) {
                 </List>
                 <Divider />
                 <List>
-                <ListItemButton key="Upgrade">
+                <ListItemButton key="Upgrade" onClick={() => router.push("/app/upgrade")}>
                     <ListItemIcon>
                     <ShoppingCartIcon />
                     </ListItemIcon>
