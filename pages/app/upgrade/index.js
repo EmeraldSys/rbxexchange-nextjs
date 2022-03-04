@@ -1,8 +1,8 @@
 import * as React from "react"
 import { useRouter } from "next/router"
-import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../../contexts/AuthContext"
 
-import AppContainer from "../../components/AppContainer"
+import AppContainer from "../../../components/AppContainer"
 import Typography from "@mui/material/Typography"
 
 export default function Upgrade() {
